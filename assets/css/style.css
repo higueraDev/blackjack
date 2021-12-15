@@ -1,0 +1,24 @@
+html, body {
+    margin: 0;
+    background-color: #2f4f30!important;
+    color: #fff!important;
+}
+
+.titulo {
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    font-size: 25px;
+}
+
+.carta {
+    position: relative;
+    left: 100px;
+    margin-left: -75px;
+    width: 150px;
+}
+
+.contenedor-carta{
+    height: 240px;
+}
