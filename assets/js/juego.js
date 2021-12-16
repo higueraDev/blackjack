@@ -4,6 +4,18 @@ let tipos = ["C", "D", "H", "S"];
 
 let cartaLetras = ["A", "J", "Q", "K"];
 
+let marcadorPlayer = 0;
+let marcadorPC = 0;
+
+// referencias HTML
+const btnPedirCarta = document.querySelector("#btnPedirCarta");
+const btnNuevoJuego = document.querySelector("#btnNuevoJuego");
+const btnDetenerJuego = document.querySelector("#btnDetenerJuego");
+const puntajes = document.querySelectorAll(".puntaje");
+
+const puntajePlayer = puntajes[0];
+const puntajePC = puntajes[1];
+
 // Esta funcion ordena un arreglo de manera aleatoria y lo retorna
 
 const shuffle = (target) => {
@@ -34,8 +46,6 @@ const crearDeck = () => {
     }
 
     deck = shuffle(deck);
-    console.log(deck);
-
     return deck;
 };
 
@@ -46,16 +56,20 @@ crearDeck();
 const tomarCarta = () =>
     deck[0] ? deck.pop() : console.error("No hay mas cartas en el deck");
 
-const CARTA = tomarCarta();
-
-console.log(deck, CARTA);
-
 // funcion que determina el valor numerico de una carta
 
 const valorCarta = (carta) => {
-    valor = carta.substring(0, carta.length - 1);
+    let valor = carta.substring(0, carta.length - 1);
     return isNaN(valor) ? (valor === "A" ? 11 : 10) : valor * 1;
 };
 
-console.log(valorCarta(CARTA));
+// EVENTOS
+btnPedirCarta.addEventListener("click", () => {
+    const carta = tomarCarta();
 
+    carta
+        ? (marcadorPlayer += valorCarta(carta))
+        : alert("Se terminaron las cartas");
+
+    puntajePlayer.innerText = marcadorPlayer;
+});
