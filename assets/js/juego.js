@@ -4,6 +4,9 @@ let tipos = ["C", "D", "H", "S"];
 
 let cartaLetras = ["A", "J", "Q", "K"];
 
+
+// Esta funcion ordena un arreglo de manera aleatoria y lo retorna
+
 const shuffle = (target) => {
     let arr = [];
 
@@ -39,3 +42,11 @@ const crearDeck = () => {
 };
 
 crearDeck();
+
+
+// funcion que toma una carta del arreglo deck y lo muestra al usuario
+
+const tomarCarta = () => deck[0] ? deck.pop() : console.error("No hay mas cartas en el deck");
+
+deck = [];
+console.log(tomarCarta(),deck);
