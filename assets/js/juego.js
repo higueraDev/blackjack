@@ -15,6 +15,8 @@ const puntajes = document.querySelectorAll(".puntaje");
 
 const puntajePlayer = puntajes[0];
 const puntajePC = puntajes[1];
+const jugadorCartas = document.querySelector("#jugadorCartas");
+const pcCartas = document.querySelector("#pcCartas");
 
 // Esta funcion ordena un arreglo de manera aleatoria y lo retorna
 
@@ -31,6 +33,8 @@ const shuffle = (target) => {
 
     return arr;
 };
+
+// funcion que crea el deck
 
 const crearDeck = () => {
     for (let i = 2; i <= 10; i++) {
@@ -63,13 +67,69 @@ const valorCarta = (carta) => {
     return isNaN(valor) ? (valor === "A" ? 11 : 10) : valor * 1;
 };
 
+// funcion que toma una carta y la muestra
+
+const pedirCarta = (turno) => {
+    const carta = tomarCarta();
+    const imgCartas = document.createElement("img");
+    imgCartas.src = `assets/cartas/${carta}.png`;
+    imgCartas.classList.add("carta");
+
+    if (turno == "player") {
+        carta
+            ? (marcadorPlayer += valorCarta(carta))
+            : alert("Se terminaron las cartas");
+
+        jugadorCartas.append(imgCartas);
+
+        puntajePlayer.innerText = marcadorPlayer;
+
+        mostrarResultado();
+    } else {
+        if (carta) {
+            marcadorPC += valorCarta(carta);
+        }
+
+        pcCartas.append(imgCartas);
+
+        puntajePC.innerText = marcadorPC;
+    }
+};
+
+// funcion que deshabilita los botones
+const disableBtn = () => {
+    btnPedirCarta.disabled = true;
+    btnDetenerJuego.disabled = true;
+};
+
+// funcion que detiene el juego del player y pasa el turno al pc
+
+const detenerJuego = () => {
+    disableBtn();
+    do {
+        pedirCarta("pc");
+    } while (marcadorPlayer <= 21 && marcadorPC < marcadorPlayer);
+};
+
+// funcion que muestra el resultado al final del juego
+
+const mostrarResultado = () => {
+    if (marcadorPlayer >= 21) {
+        detenerJuego();
+
+        if (marcadorPlayer === 21) {
+            alert("¡Felicidades Ganaste!");
+        } else {
+            alert("Lo siento, perdiste :c");
+        }
+    }
+};
+
 // EVENTOS
 btnPedirCarta.addEventListener("click", () => {
-    const carta = tomarCarta();
+    pedirCarta("player");
+});
 
-    carta
-        ? (marcadorPlayer += valorCarta(carta))
-        : alert("Se terminaron las cartas");
-
-    puntajePlayer.innerText = marcadorPlayer;
+btnDetenerJuego.addEventListener("click", () => {
+    detenerJuego();
 });
