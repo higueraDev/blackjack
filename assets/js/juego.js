@@ -108,19 +108,28 @@ const detenerJuego = () => {
     disableBtn();
     do {
         pedirCarta("pc");
-    } while (marcadorPlayer <= 21 && marcadorPC < marcadorPlayer);
+    } while (marcadorPlayer <= 21 && marcadorPC <= marcadorPlayer);
+
+    mostrarResultado();
 };
 
 // funcion que muestra el resultado al final del juego
 
 const mostrarResultado = () => {
-    if (marcadorPlayer >= 21) {
-        detenerJuego();
+    if ((btnDetenerJuego.disabled == true) || (marcadorPlayer >= 21)) {
 
-        if (marcadorPlayer === 21) {
-            alert("¡Felicidades Ganaste!");
-        } else {
+        if (marcadorPlayer >= 21) {
+            detenerJuego();
+    
+            if (marcadorPlayer === 21) {
+                alert("¡Felicidades Ganaste!");
+            } else {
+                alert("Lo siento, perdiste :c");
+            }
+        } else if ((marcadorPC > marcadorPlayer) && (marcadorPC <= 21)) {
             alert("Lo siento, perdiste :c");
+        }  else {
+            alert("¡Es un empate!");
         }
     }
 };
