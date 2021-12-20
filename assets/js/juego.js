@@ -20,6 +20,8 @@ const jugadorCartas = document.querySelector("#jugadorCartas");
 const pcCartas = document.querySelector("#pcCartas");
 
 btnDetenerJuego.disabled = true;
+btnNuevoJuego.disabled = true;
+btnPedirCarta.disabled = false;
 
 // Esta funcion ordena un arreglo de manera aleatoria y lo retorna
 
