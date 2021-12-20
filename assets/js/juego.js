@@ -84,7 +84,6 @@ const pedirCarta = (turno) => {
 
         puntajePlayer.innerText = marcadorPlayer;
 
-        mostrarResultado();
     } else {
         if (carta) {
             marcadorPC += valorCarta(carta);
@@ -109,36 +108,32 @@ const detenerJuego = () => {
     do {
         pedirCarta("pc");
     } while (marcadorPlayer <= 21 && marcadorPC <= marcadorPlayer);
-
-    mostrarResultado();
 };
 
 // funcion que muestra el resultado al final del juego
 
 const mostrarResultado = () => {
-    if ((btnDetenerJuego.disabled == true) || (marcadorPlayer >= 21)) {
-
-        if (marcadorPlayer >= 21) {
-            detenerJuego();
-    
-            if (marcadorPlayer === 21) {
-                alert("¡Felicidades Ganaste!");
-            } else {
-                alert("Lo siento, perdiste :c");
-            }
-        } else if ((marcadorPC > marcadorPlayer) && (marcadorPC <= 21)) {
-            alert("Lo siento, perdiste :c");
-        }  else {
-            alert("¡Es un empate!");
-        }
-    }
+    marcadorPlayer === 21
+        ? alert("¡Felicidades Ganaste!")
+        : marcadorPlayer > 21
+        ? alert("Lo siento, Perdiste")
+        : marcadorPC > marcadorPlayer && marcadorPC < 21
+        ? alert("Lo siento, Perdiste")
+        : marcadorPC > 21
+        ? alert("¡Felicidades Ganaste!")
+        : alert("¡Es un Empate!");
 };
 
 // EVENTOS
 btnPedirCarta.addEventListener("click", () => {
     pedirCarta("player");
+    if(marcadorPlayer >= 21) {
+        detenerJuego();
+        mostrarResultado();
+    }
 });
 
 btnDetenerJuego.addEventListener("click", () => {
     detenerJuego();
+    mostrarResultado();
 });
