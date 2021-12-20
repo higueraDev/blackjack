@@ -5,6 +5,7 @@ let tipos = ["C", "D", "H", "S"];
 let cartaLetras = ["A", "J", "Q", "K"];
 
 let marcadorPlayer = 0;
+
 let marcadorPC = 0;
 
 // referencias HTML
@@ -128,20 +129,20 @@ const mostrarResultado = () => {
 // funcion que borra las cartas del tablero
 
 const limpiarTablero = (tablero) => {
-
     let cartas = tablero.lastElementChild;
 
-    while (cartas){
+    while (cartas) {
         tablero.removeChild(cartas);
         cartas = tablero.lastElementChild;
     }
-    
 };
 
 // EVENTOS
 btnPedirCarta.addEventListener("click", () => {
     pedirCarta("player");
     btnDetenerJuego.disabled = false;
+    btnNuevoJuego.disabled = false;
+
     if (marcadorPlayer >= 21) {
         detenerJuego();
         mostrarResultado();
@@ -154,6 +155,9 @@ btnDetenerJuego.addEventListener("click", () => {
 });
 
 btnNuevoJuego.addEventListener("click", () => {
+    btnNuevoJuego.disabled = true;
+    btnDetenerJuego.disabled = true;
+    btnPedirCarta.disabled = false;
 
     puntajePlayer.innerText = marcadorPlayer = 0;
     puntajePC.innerText = marcadorPC = 0;
