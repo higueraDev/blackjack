@@ -18,6 +18,8 @@ const puntajePC = puntajes[1];
 const jugadorCartas = document.querySelector("#jugadorCartas");
 const pcCartas = document.querySelector("#pcCartas");
 
+btnDetenerJuego.disabled = true;
+
 // Esta funcion ordena un arreglo de manera aleatoria y lo retorna
 
 const shuffle = (target) => {
@@ -83,7 +85,6 @@ const pedirCarta = (turno) => {
         jugadorCartas.append(imgCartas);
 
         puntajePlayer.innerText = marcadorPlayer;
-
     } else {
         if (carta) {
             marcadorPC += valorCarta(carta);
@@ -124,10 +125,24 @@ const mostrarResultado = () => {
         : alert("¡Es un Empate!");
 };
 
+// funcion que borra las cartas del tablero
+
+const limpiarTablero = (tablero) => {
+
+    let cartas = tablero.lastElementChild;
+
+    while (cartas){
+        tablero.removeChild(cartas);
+        cartas = tablero.lastElementChild;
+    }
+    
+};
+
 // EVENTOS
 btnPedirCarta.addEventListener("click", () => {
     pedirCarta("player");
-    if(marcadorPlayer >= 21) {
+    btnDetenerJuego.disabled = false;
+    if (marcadorPlayer >= 21) {
         detenerJuego();
         mostrarResultado();
     }
@@ -136,4 +151,15 @@ btnPedirCarta.addEventListener("click", () => {
 btnDetenerJuego.addEventListener("click", () => {
     detenerJuego();
     mostrarResultado();
+});
+
+btnNuevoJuego.addEventListener("click", () => {
+
+    puntajePlayer.innerText = marcadorPlayer = 0;
+    puntajePC.innerText = marcadorPC = 0;
+    deck = [];
+    crearDeck();
+    limpiarTablero(jugadorCartas);
+    limpiarTablero(pcCartas);
+
 });
