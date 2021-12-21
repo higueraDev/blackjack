@@ -13,6 +13,7 @@ const btnPedirCarta = document.querySelector("#btnPedirCarta");
 const btnNuevoJuego = document.querySelector("#btnNuevoJuego");
 const btnDetenerJuego = document.querySelector("#btnDetenerJuego");
 const puntajes = document.querySelectorAll(".puntaje");
+const alertas = document.querySelector("#resultadoAlert");
 
 const puntajePlayer = puntajes[0];
 const puntajePC = puntajes[1];
@@ -22,6 +23,12 @@ const pcCartas = document.querySelector("#pcCartas");
 btnDetenerJuego.disabled = true;
 btnNuevoJuego.disabled = true;
 btnPedirCarta.disabled = false;
+
+// funcion que muestra las alertas en un modal
+const mostrarAlerta = (mensaje) => {
+    alertas.innerText = mensaje;
+    alertas.classList.add('show', 'alert', 'alert-warning');
+};
 
 // Esta funcion ordena un arreglo de manera aleatoria y lo retorna
 
@@ -83,7 +90,7 @@ const pedirCarta = (turno) => {
     if (turno == "player") {
         carta
             ? (marcadorPlayer += valorCarta(carta))
-            : alert("Se terminaron las cartas");
+            : mostrarAlerta('¡Se terminaron las cartas!');
 
         jugadorCartas.append(imgCartas);
 
@@ -118,25 +125,20 @@ const detenerJuego = () => {
 
 const mostrarResultado = () => {
     marcadorPlayer === 21
-        ? alert("¡Felicidades Ganaste!")
+        ? mostrarAlerta("¡Felicidades Ganaste!")
         : marcadorPlayer > 21
-        ? alert("Lo siento, Perdiste")
+        ? mostrarAlerta("Lo siento, Perdiste")
         : marcadorPC > marcadorPlayer && marcadorPC < 21
-        ? alert("Lo siento, Perdiste")
+        ? mostrarAlerta("Lo siento, Perdiste")
         : marcadorPC > 21
-        ? alert("¡Felicidades Ganaste!")
-        : alert("¡Es un Empate!");
+        ? mostrarAlerta("¡Felicidades Ganaste!")
+        : mostrarAlerta("¡Es un Empate!");
 };
 
 // funcion que borra las cartas del tablero
 
 const limpiarTablero = (tablero) => {
-    let cartas = tablero.lastElementChild;
-
-    while (cartas) {
-        tablero.removeChild(cartas);
-        cartas = tablero.lastElementChild;
-    }
+    tablero.innerHTML = "";
 };
 
 // EVENTOS
@@ -157,6 +159,7 @@ btnDetenerJuego.addEventListener("click", () => {
 });
 
 btnNuevoJuego.addEventListener("click", () => {
+
     btnNuevoJuego.disabled = true;
     btnDetenerJuego.disabled = true;
     btnPedirCarta.disabled = false;
@@ -167,5 +170,8 @@ btnNuevoJuego.addEventListener("click", () => {
     crearDeck();
     limpiarTablero(jugadorCartas);
     limpiarTablero(pcCartas);
+
+    alertas.innerText = "";
+    alertas.classList.remove('show', 'alert', 'alert-warning');
 
 });

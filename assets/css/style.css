@@ -22,3 +22,12 @@ html, body {
 .contenedor-carta{
     height: 240px;
 }
+
+#resultadoAlert{
+    height: 0;
+    transition: all 400ms ease;
+}
+
+#resultadoAlert.show{
+    height: auto;
+}
